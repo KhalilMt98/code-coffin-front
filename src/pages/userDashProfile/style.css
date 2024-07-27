@@ -1,0 +1,36 @@
+.body{
+    margin-top: 100 px;
+}
+
+
+.user-info {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.user-info .info-box {
+  border: 1px solid #ddd;
+  padding: 20px;
+  width: 200px;
+  position: relative;
+}
+
+.user-info .info-box input {
+  border: none;
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.user-info .info-box input:disabled {
+  background: none;
+  color: black;
+}
+
+.user-info .edit-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}

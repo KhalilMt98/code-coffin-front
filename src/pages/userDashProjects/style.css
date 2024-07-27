@@ -1,0 +1,32 @@
+.search-button {
+    max-width: 200px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-container {
+    margin-bottom: 20px;
+}
+
+.projects-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.project-item {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: left;
+}
