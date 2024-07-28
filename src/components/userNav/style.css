@@ -14,7 +14,7 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
-  gap: 250px
+  gap: 250px;
 }
 
 .nav-item {
@@ -38,6 +38,7 @@
 
 /* Style the search bar */
 .search-bar {
+  position: relative; /* Important for positioning the dropdown */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -61,5 +62,30 @@
 .search-bar .search-icon {
   width: 20px; /* Adjust as needed */
   height: 20px;
-  
+}
+
+/* Style the suggestions list */
+.suggestions-list {
+  position: absolute;
+  top: 100%; /* Position it below the search bar */
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000; /* Ensure it is above other elements */
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.suggestion-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
 }
