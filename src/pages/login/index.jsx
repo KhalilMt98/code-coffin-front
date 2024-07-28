@@ -1,24 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
 import { routes } from "../../utils/routes";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const SignUp = () => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [name, setName] = useState("");
   const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      verifyToken(token);
+    }
+  }, [navigate]);
+
+  const verifyToken = async (token) => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/verify-token", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.data.status === "success") {
+        const userRole = response.data.user.role;
+        if (userRole === "user") {
+          navigate("/user");
+        } else {
+          navigate("/admin");
+        }
+      } else {
+        localStorage.removeItem("token");
+      }
+    } catch (error) {
+      console.error("Token verification error:", error);
+      localStorage.removeItem("token");
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userData = { name, email, password };
+    const userData = {email, password };
     console.log(userData);
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-    } else {
       try {
         const response = await axios.post(
-          "http://localhost:8000/api/register/",
+          "http://localhost:8000/api/login/",
           userData,
           {
             headers: {
@@ -27,7 +51,13 @@ const SignUp = () => {
           }
         );
         if (response.data.status === "success") {
-          navigate(routes.login);
+          console.log(response)
+          localStorage.setItem("token",response.data.authorisation.token);
+          if(response.data.user.role ==="user"){
+            navigate("/user");}
+          else{
+            navigate("/admin")
+          }
         } else {
           alert(
             response.data.error || "Registration failed. Please try again."
@@ -37,23 +67,13 @@ const SignUp = () => {
         console.error("Registration error:", error);
         alert("An error occurred. Please try again.");
       }
-    }
+    
   };
   return (
     <div className="sign-up-container">
       <div className="sign-up-card">
         <h2>Sign Up Human!</h2>
         <form onSubmit={handleSubmit}>
-          <label>
-            Full Name
-            <input
-              type="text"
-              placeholder="enter your full name here"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </label>
           <label>
             Email
             <input
@@ -74,20 +94,10 @@ const SignUp = () => {
               required
             />
           </label>
-          <label>
-            Confirm Password
-            <input
-              type="password"
-              placeholder="re-enter password here"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </label>
-          <button type="submit">Sign Up</button>
+          <button type="submit">Log In</button>
         </form>
-        <p className="login-link" onClick={() => navigate(routes.login)}>
-          Already have an account? Login
+        <p className="login-link" onClick={() => navigate(routes.signup)}>
+          Don't have an account? Signup
         </p>
       </div>
       <img
@@ -99,4 +109,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;
