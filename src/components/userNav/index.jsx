@@ -33,7 +33,7 @@ const UserNav = ({
     };
 
     fetchUsers();
-  }, []);
+  }, );
 
   const handleInputChange = (e) => {
     const query = e.target.value;
