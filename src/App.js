@@ -15,6 +15,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/signUp" element={<SignUp />} />
+
         <Route path={routes.login} element={<Login />} />
         <Route path={routes.signup} element={<SignUp/>}/>
         <Route path={routes.codeEditor} element={<CodeEditor/>}/>
