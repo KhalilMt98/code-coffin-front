@@ -1,36 +1,40 @@
-.body{
-    margin-top: 100 px;
+.body {
+    margin-top: 100px;
 }
 
-
 .user-info {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
 }
 
 .user-info .info-box {
-  border: 1px solid #ddd;
-  padding: 20px;
-  width: 200px;
-  position: relative;
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 200px;
+    position: relative;
 }
 
 .user-info .info-box input {
-  border: none;
-  width: 100%;
-  padding: 5px;
-  box-sizing: border-box;
+    border: none;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
 }
 
 .user-info .info-box input:disabled {
-  background: none;
-  color: black;
+    background: none;
+    color: black;
+}
+
+.user-info .info-box input.updated {
+    border: 2px solid green;
+    transition: border-color 2s ease-out;
 }
 
 .user-info .edit-icon {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
 }
