@@ -14,12 +14,17 @@ const UserNav = ({
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const token= localStorage.getItem("token");
 
   useEffect(() => {
-    // Fetch all users on component mount
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/users');
+        const response = await axios.get('http://localhost:8000/api/users',{
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+        console.log(response.data.users)
         setUsers(response.data.users);
         setFilteredUsers(response.data.users); // Initialize filteredUsers with all users
       } catch (error) {
