@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+import {routes} from'../../utils/routes';
 import axios from 'axios';
-import './style.css'; // Import the CSS file
+import './style.css'; 
 
 const UserChats = () => {
   const [chats, setChats] = useState([]);
@@ -8,6 +10,39 @@ const UserChats = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (token) {
+      verifyToken(token);
+    } else {
+      navigate(routes.login);
+    }
+  }, [token, navigate]);
+
+  const verifyToken = async (token) => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/verify-token", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      if (response.data.status === "success") {
+        const userRole = response.data.user.role;
+        if (userRole !== "user") {
+          navigate("/admin");
+        }
+      } else {
+        localStorage.removeItem("token");
+        navigate(routes.login);
+      }
+    } catch (error) {
+      console.error("Token verification error:", error);
+      localStorage.removeItem("token");
+      navigate(routes.login);
+    }
+  };
+
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -45,7 +80,7 @@ const UserChats = () => {
       });
 
       const sentMessage = response.data.data;
-      sentMessage.created_at = new Date().toISOString(); // Use the current time
+      sentMessage.created_at = new Date().toISOString(); 
 
       setMessages(prevMessages => [...prevMessages, sentMessage]);
       setNewMessage('');
