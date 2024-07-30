@@ -1,6 +1,4 @@
 import React from "react";
-import "../../pages/admin/style.css"; // Ensure you import the CSS file if it's separate
-
 const Sidebar = ({ handleSectionChange, activeSection, className }) => {
   return (
     <aside className={`sidebar ${className}`}>
@@ -16,7 +14,7 @@ const Sidebar = ({ handleSectionChange, activeSection, className }) => {
           className={activeSection === "addUser" ? "active" : ""}
           onClick={() => handleSectionChange("addUser")}
         >
-          Add User
+          Add Users
         </li>
         <li
           className={activeSection === "logout" ? "active" : ""}

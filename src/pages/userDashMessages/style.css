@@ -1,0 +1,73 @@
+/* UserChats.css */
+
+.container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .chatList {
+    flex: 1;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+  }
+  
+  .chatItem {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .chatContent {
+    flex: 3;
+    padding: 20px;
+  }
+  
+  .messagesContainer {
+    height: 80vh;
+    overflow-y: auto;
+  }
+  
+  .message {
+    margin-bottom: 10px;
+  }
+  
+  .messageText {
+    margin: 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .messageSender {
+    background-color: #dcf8c6;
+    text-align: right;
+  }
+  
+  .messageReceiver {
+    background-color: #fff;
+    text-align: left;
+  }
+  
+  .timestamp {
+    display: block;
+    font-size: 0.75rem;
+    color: #888;
+  }
+  
+  .inputContainer {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .messageInput {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .sendButton {
+    padding: 10px;
+    background-color: #007bff;
+    height: fit-content;
+  }
+  

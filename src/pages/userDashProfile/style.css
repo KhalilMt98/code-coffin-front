@@ -1,0 +1,62 @@
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+    padding: 20px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.info-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 300px;
+    position: relative;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.info-box input {
+    border: 1px solid #ccc;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.info-box input:disabled {
+    background: none;
+    color: black;
+}
+
+.info-box input.updated {
+    border: 2px solid green;
+    transition: border-color 2s ease-out;
+}
+
+.edit-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+@media (max-width: 600px) {
+    .info-box {
+        width: 90%;
+    }
+
+    .body {
+        margin-top: 80px;
+    }
+}

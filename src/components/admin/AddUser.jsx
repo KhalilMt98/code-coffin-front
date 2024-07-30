@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
 const AddUsers = () => {
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
@@ -28,7 +27,7 @@ const AddUsers = () => {
         return;
       }
 
-      const response = await axios.post('http://localhost:8000/api/import-users', formData, {
+      const response = await axios.post('http://localhost:8000/api/upload-users', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`,
@@ -47,23 +46,23 @@ const AddUsers = () => {
   };
 
   return (
-    <div>
-      <h2>Add Users</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="file" accept=".xlsx, .csv" onChange={handleFileChange} />
-        <button type="submit">Upload</button>
+    <div className="container1">
+      <h2 className="heading">Add Users</h2>
+      <form onSubmit={handleSubmit} className="form">
+        <input type="file" accept=".xlsx, .csv" onChange={handleFileChange} className="input" />
+        <button type="submit" className="button">Upload</button>
       </form>
-      {message && <p>{message}</p>}
       {errors.length > 0 && (
-        <div>
+        <div className="errorsContainer">
           <h3>Validation Errors:</h3>
           <ul>
             {errors.map((error, index) => (
-              <li key={index}>{error}</li>
+              <li key={index} className="errorItem">{error}</li>
             ))}
           </ul>
         </div>
       )}
+      {message && <p className="message">{message}</p>}
     </div>
   );
 };
