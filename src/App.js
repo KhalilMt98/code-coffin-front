@@ -10,6 +10,7 @@ import { routes } from './utils/routes';
 import CodeEditor from './pages/code-editor/CodeEditor';
 import UserDashProjects from './pages/userDashProjects';
 import UserDashMessages from './pages/userDashMessages';
+import LandingPage from './pages/landingPage';
 function App() {
   return (
     <BrowserRouter>
@@ -23,7 +24,7 @@ function App() {
         <Route path="/profile" element={<UserDashProfile />} />
         <Route path="/projects" element={<UserDashProjects />} />
         <Route path="/messages" element={<UserDashMessages />} />
-        
+        <Route path="" element={<LandingPage />} />
 
         </Routes>
     </BrowserRouter>

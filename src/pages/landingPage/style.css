@@ -1,0 +1,147 @@
+/* LandingPage.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    background-color: #1e1e1e;
+}
+
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navbar {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000;
+}
+
+.logo {
+    height: 50px;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.sign-up-button, .login-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.sign-up-button {
+    background-color: #f0e68c;
+    color: #000;
+}
+
+.login-button {
+    background-color: #fff;
+    color: #000;
+}
+
+.hero-section {
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 48px;
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-size: 24px;
+    margin: 10px 0 0 0;
+}
+
+.content {
+    width: 80%;
+    max-width: 1000px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.welcome-section, .features-section, .signup-section {
+    margin-bottom: 40px;
+}
+
+.welcome-title, .features-title {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.welcome-text, .features-list {
+    font-size: 18px;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+}
+
+.features-list li {
+    margin: 10px 0;
+}
+
+.signup-section p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.footer {
+    width: 100%;
+    padding: 20px 0;
+    background-color: #2e2e2e;
+    text-align: center;
+    position: static;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-logo {
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.footer-links {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+}

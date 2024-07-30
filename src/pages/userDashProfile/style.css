@@ -1,40 +1,62 @@
 .body {
-    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+    padding: 20px;
 }
 
 .user-info {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
     margin-top: 20px;
 }
 
-.user-info .info-box {
+.info-box {
     border: 1px solid #ddd;
     padding: 20px;
-    width: 200px;
+    width: 300px;
     position: relative;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #fff;
 }
 
-.user-info .info-box input {
-    border: none;
+.info-box input {
+    border: 1px solid #ccc;
     width: 100%;
-    padding: 5px;
+    padding: 10px;
     box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
-.user-info .info-box input:disabled {
+.info-box input:disabled {
     background: none;
     color: black;
 }
 
-.user-info .info-box input.updated {
+.info-box input.updated {
     border: 2px solid green;
     transition: border-color 2s ease-out;
 }
 
-.user-info .edit-icon {
+.edit-icon {
     position: absolute;
     top: 10px;
     right: 10px;
     cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+@media (max-width: 600px) {
+    .info-box {
+        width: 90%;
+    }
+
+    .body {
+        margin-top: 80px;
+    }
 }

@@ -1,9 +1,17 @@
-/* Ensure the navbar takes full width and aligns items properly */
+/* Navbar Component CSS */
 .navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 60px; /* Fixed height for the navbar */
+  background-color: #333;
+  color: white;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0 20px;
-  background-color: #333; /* Change as per your theme */
+  box-sizing: border-box;
+  z-index: 1000;
 }
 
 /* Align the items in the navbar properly */
@@ -14,7 +22,6 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
-  gap: 250px;
 }
 
 .nav-item {
@@ -40,7 +47,6 @@
 .search-bar {
   position: relative; /* Important for positioning the dropdown */
   display: flex;
-  justify-content: space-between;
   align-items: center;
   background-color: white;
   padding: 5px;
@@ -84,8 +90,17 @@
 .suggestion-item {
   padding: 8px;
   cursor: pointer;
+  color: black
 }
 
 .suggestion-item:hover {
   background-color: #f0f0f0;
+}
+
+/* Add this to your style.css */
+.username {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.9em;
+  color: #fff;
 }

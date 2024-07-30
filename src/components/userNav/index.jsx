@@ -14,17 +14,18 @@ const UserNav = ({
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-  const token= localStorage.getItem("token");
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false); // Manage visibility
+  const [username, setUsername] = useState(""); // State to store username
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/users',{
+        const response = await axios.get('http://localhost:8000/api/users', {
           headers: {
             "Authorization": `Bearer ${token}`
           }
         });
-        console.log(response.data.users)
         setUsers(response.data.users);
         setFilteredUsers(response.data.users); // Initialize filteredUsers with all users
       } catch (error) {
@@ -33,7 +34,14 @@ const UserNav = ({
     };
 
     fetchUsers();
-  }, );
+  }, [token]); // Dependency array includes token
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []); // Fetch username from local storage on component mount
 
   const handleInputChange = (e) => {
     const query = e.target.value;
@@ -47,10 +55,23 @@ const UserNav = ({
     } else {
       setFilteredUsers(users);
     }
+
+    setIsDropdownVisible(true); // Show dropdown when typing
+  };
+
+  const handleInputFocus = () => {
+    setIsDropdownVisible(true); // Show dropdown on focus
+  };
+
+  const handleInputBlur = () => {
+    setTimeout(() => {
+      setIsDropdownVisible(false); // Hide dropdown on blur after a short delay
+    }, 200);
   };
 
   const handleSuggestionClick = (user) => {
     setSelectedUser(user);
+    setIsDropdownVisible(false); // Hide dropdown when a suggestion is clicked
   };
 
   const handleClosePopup = () => {
@@ -70,8 +91,10 @@ const UserNav = ({
               placeholder="Search Users..."
               value={query}
               onChange={handleInputChange}
+              onFocus={handleInputFocus}  // Show dropdown on focus
+              onBlur={handleInputBlur}    // Hide dropdown on blur
             />
-            {filteredUsers.length > 0 && (
+            {isDropdownVisible && filteredUsers.length > 0 && (
               <ul className="suggestions-list">
                 {filteredUsers.map((suggestion) => (
                   <li key={suggestion.id} className="suggestion-item" onClick={() => handleSuggestionClick(suggestion)}>
@@ -85,7 +108,10 @@ const UserNav = ({
 
         <li className="nav-item"><Link to="/projects">Projects</Link></li>
         <li className="nav-item"><Link to="/messages">Messages</Link></li>
-        <li className="nav-item"><Link to="/profile">Profile</Link></li>
+        <li className="nav-item">
+          <Link to="/profile">Profile</Link>
+          {username && <span className="username">{username}</span>} {/* Display username */}
+        </li>
       </ul>
 
       {selectedUser && <UserPopup user={selectedUser} onClose={handleClosePopup} />}

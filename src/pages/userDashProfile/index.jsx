@@ -18,13 +18,21 @@ const UserDashProfile = () => {
         const fetchUserData = async () => {
             try {
                 const token = localStorage.getItem('token'); // Adjust if using a different token storage
-                const response = await axios.get(`http://localhost:8000/api/users`, {
+                const response = await axios.get('http://localhost:8000/api/users', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                console.log(response.data.users)
-                setUser(response.data.users);
+
+                console.log(response.data); // Debugging: Log the entire response
+
+                const userData = response.data.users; // Adjust based on actual response structure
+                setUser({
+                    id: userData.id,
+                    name: userData.name,
+                    email: userData.email,
+                    password: '' // Leave password empty for security reasons
+                });
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
@@ -50,7 +58,7 @@ const UserDashProfile = () => {
 
         try {
             const token = localStorage.getItem('token'); // Adjust if using a different token storage
-            await axios.put(`/api/users/${user.id}`, {
+            await axios.put(`http://localhost:8000/api/users/${user.id}`, {
                 [field]: user[field]
             }, {
                 headers: {
@@ -67,7 +75,7 @@ const UserDashProfile = () => {
     return (
         <div className="body flex column between">
             <UserNav />
-            {/* <div className="user-info flex column center">
+            <div className="user-info flex column center">
                 <div className="info-box">
                     <label htmlFor="name">Name</label>
                     <input
@@ -122,7 +130,7 @@ const UserDashProfile = () => {
                         onClick={() => handleEditClick('password')}
                     />
                 </div>
-            </div> */}
+            </div>
         </div>
     );
 };
