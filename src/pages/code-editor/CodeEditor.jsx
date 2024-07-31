@@ -16,13 +16,24 @@ const fetchSuggestions = async (code, language) => {
   }
 };
 
+const getCodeExplanation = async (code) => {
+  try {
+    const response = await axios.post('http://localhost:8000/api/explanation', { code });
+    const explanation = response.data.suggestions 
+    return explanation  || "No explanation available.";
+  } catch (error) {
+    console.error('Error fetching code explanation:', error.response ? error.response.data : error.message);
+    return "Error fetching explanation.";
+  }
+};
+
 const CodeEditor = () => {
   const { id } = useParams();
   const editorRef = useRef();
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [title,setTitle]=useState("");
+  const [title, setTitle] = useState("");
 
   const toggleSuggestions = () => {
     setShowSuggestions(!showSuggestions);
@@ -50,14 +61,15 @@ const CodeEditor = () => {
   }, [id]);
 
   useEffect(() => {
-    if (value) {
-      const fetchAndSetSuggestions = async () => {
+    const debounceTimeout = setTimeout(async () => {
+      if (value) {
         const fetchedSuggestions = await fetchSuggestions(value, 'python');
-        console.log(fetchedSuggestions);
         setSuggestions(fetchedSuggestions);
-      };
-      fetchAndSetSuggestions();
-    }
+      }
+    }, 300); 
+    return () => {
+      clearTimeout(debounceTimeout);
+    };
   }, [value]);
 
   useEffect(() => {
@@ -73,7 +85,7 @@ const CodeEditor = () => {
   const saveCode = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:8000/api/source-codes/${id}`, { code: value,title:title }, {
+      await axios.put(`http://localhost:8000/api/source-codes/${id}`, { code: value, title: title }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
@@ -94,11 +106,32 @@ const CodeEditor = () => {
     setValue(value);
   };
 
+  const handleExplainCode = async () => {
+    try {
+      const explanation = await getCodeExplanation(value);
+
+      const response = await axios.post('http://localhost:8000/api/speech', {
+        text: explanation
+      }, {
+        responseType: 'blob'
+      });
+      const audioUrl = URL.createObjectURL(new Blob([response.data], { type: 'audio/mpeg' }));
+      const audio = new Audio(audioUrl);
+      audio.play();
+    } catch (error) {
+      console.error('Error generating speech:', error.response ? error.response.data : error.message);
+      console.log('Error response:', error.response);
+    }
+  };
+  
   return (
     <div className="container">
       <div className="editor-container">
         <p className="language-selector">Language:</p>
         <p className="language-selector-text">python</p>
+        <button onClick={handleExplainCode} className="explain-button">
+          Explain Code
+        </button>
         <Editor
           className="editor"
           options={{
