@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
-import {routes} from'../../utils/routes';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { routes } from '../../utils/routes';
 import axios from 'axios';
 import './style.css'; 
 
@@ -11,6 +11,8 @@ const UserChats = () => {
   const [newMessage, setNewMessage] = useState('');
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
+  const location = useLocation();
+
   useEffect(() => {
     if (token) {
       verifyToken(token);
@@ -43,7 +45,6 @@ const UserChats = () => {
     }
   };
 
-
   useEffect(() => {
     const fetchChats = async () => {
       try {
@@ -53,13 +54,40 @@ const UserChats = () => {
           },
         });
         setChats(response.data.data);
+        
+        const params = new URLSearchParams(location.search);
+        const receiverId = params.get('receiver_id');
+        const receiverName=params.get('receiver_name');
+        if (receiverId) {
+          const existingChat = response.data.data.find(chat => chat.chat.participant_id === parseInt(receiverId));
+          if (existingChat) {
+            setSelectedChat(existingChat);
+            setMessages(existingChat.messages);
+          } else {
+            handleNewChat(receiverId,receiverName);
+          }
+        }
       } catch (error) {
         console.error('Error fetching chats:', error);
       }
     };
 
     fetchChats();
-  }, [token]);
+  }, [token, location]);
+
+  const handleNewChat = (receiverId,receiverName) => {
+    const newChat = {
+      chat: {
+        id: `temp-${receiverId}`,
+        participant_id: parseInt(receiverId)
+      },
+      participant_name: receiverName,
+      messages: []
+    };
+    setChats(prevChats => [...prevChats, newChat]);
+    setSelectedChat(newChat);
+    setMessages([]);
+  };
 
   const handleChatClick = (chat) => {
     setSelectedChat(chat);
