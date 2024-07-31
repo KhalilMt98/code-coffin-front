@@ -80,8 +80,9 @@ const UserNav = ({
 
   return (
     <nav className="navbar">
+      <img src={`${process.env.PUBLIC_URL}/images/CodeCoffinLogo.png`} alt="logo" className="Logo" />
+
       <ul className="nav-list">
-        <img src={`${process.env.PUBLIC_URL}/images/CodeCoffinLogo.png`} alt="logo" className="Logo" />
 
         <li className="nav-item">
           <div className="search-bar">

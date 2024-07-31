@@ -26,6 +26,9 @@ const Login = () => {
         console.log(response);
         localStorage.setItem("token", response.data.authorisation.token);
         localStorage.setItem("username", response.data.user.name);  // Store the username
+        //
+        //localStorage.setItem("user_id", response.data.user.id);
+        //
         navigate("/profile");
       } else {
         alert(response.data.error || "Login failed. Please try again.");
