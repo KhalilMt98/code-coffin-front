@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import UserNav from '../../components/userNav';
 import axios from 'axios';
-import "./style.css";
+import "./projects.css";
 
 const UserDashProjects = () => {
     const [projects, setProjects] = useState([]);

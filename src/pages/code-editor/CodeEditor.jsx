@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from 'axios';
 import Output from "./Output";
 import { useNavigate } from "react-router-dom";
-import "./styles.css";
+import "./editor.css";
 
 const fetchSuggestions = async (code, language) => {
   try {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './style.css';
+import './popup.css';
 
 const UserPopup = ({ user, onClose }) => {
   const [projects, setProjects] = useState([]);

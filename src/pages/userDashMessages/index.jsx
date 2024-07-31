@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { routes } from '../../utils/routes';
 import axios from 'axios';
-import './style.css'; 
+import './messages.css'; 
 
 const UserChats = () => {
   const [chats, setChats] = useState([]);

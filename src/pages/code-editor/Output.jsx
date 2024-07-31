@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { executeCode } from "./api";
-import "./styles.css"; 
+import "./editor.css"; 
 
 const Output = ({ editorRef, language }) => {
   const [output, setOutput] = useState(null);

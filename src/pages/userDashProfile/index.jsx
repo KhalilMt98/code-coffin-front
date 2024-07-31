@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UserNav from '../../components/userNav';
 import { useNavigate } from "react-router-dom";
-import "./style.css";
+import "./profile.css";
 
 const UserDashProfile = () => {
     const [user, setUser] = useState({

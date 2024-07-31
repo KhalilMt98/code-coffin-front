@@ -6,7 +6,7 @@ import Logout from '../../components/admin/Logout.jsx';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect } from 'react';
-import './style.css';
+import './admin.css';
 
 const AdminDashboard = () => {
   const [activeSection, setActiveSection] = useState('users');
