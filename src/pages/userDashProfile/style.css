@@ -4,6 +4,9 @@
     align-items: center;
     margin-top: 60px;
     padding: 20px;
+    background-color: #98A68A; /* Green background color */
+    height: 100vh; /* Full viewport height */
+    color: white;
 }
 
 .user-info {
@@ -11,44 +14,60 @@
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
+    width: 100%;
+    max-width: 600px; /* Constrain width for larger screens */
 }
 
 .info-box {
-    border: 1px solid #ddd;
+    border: 1px solid #444; /* Darker border to match theme */
     padding: 20px;
-    width: 300px;
+    width: 100%;
     position: relative;
     margin-bottom: 20px;
     border-radius: 5px;
-    background-color: #fff;
+    background-color: #333; /* Dark background for the info boxes */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+    cursor: pointer;
 }
 
-.info-box input {
-    border: 1px solid #ccc;
-    width: 100%;
+.info-box label {
+    color: #ccc; /* Lighter label color */
+    display: block;
+    margin-bottom: 5px;
+}
+
+.info-box .field-value {
+    border: 1px solid #666;
+    width: 100%; /* Adjust width to leave space for the edit icon */
     padding: 10px;
     box-sizing: border-box;
     border-radius: 5px;
     font-size: 16px;
+    background-color: #444; /* Dark background */
+    color: white; /* Light text color */
 }
 
-.info-box input:disabled {
-    background: none;
-    color: black;
+.info-box input {
+    border: 1px solid #666;
+    width: 100%; /* Adjust width to leave space for the edit icon */
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #444; /* Dark input background */
+    color: white; /* Light text color */
 }
 
-.info-box input.updated {
-    border: 2px solid green;
-    transition: border-color 2s ease-out;
+.update-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
 }
 
 .edit-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
 }
 
 @media (max-width: 600px) {

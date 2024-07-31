@@ -18,6 +18,8 @@ function App() {
         <Route path={routes.codeEditor} element={<CodeEditor/>}/>
         <Route path="/" element={<UserDashProfile/>}/>
         <Route path='/projects' element={<UserDashProjects/>}/>
+        <Route path='/profile' element={<UserDashProfile/>}/>
+        <Route path='/admin' element={<AdminDashboard/>}/>
         </Routes>
     </BrowserRouter>
   );

@@ -8,30 +8,31 @@ const UserDashProfile = () => {
         id: '',
         name: '',
         email: '',
-        password: ''
+        password: '' // This will be used for setting a new password
     });
 
-    const [editableField, setEditableField] = useState(null);
-    const [updatedField, setUpdatedField] = useState(null);
+    const [editableFields, setEditableFields] = useState({
+        name: false,
+        email: false,
+        password: false
+    });
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const token = localStorage.getItem('token'); // Adjust if using a different token storage
-                const response = await axios.get('http://localhost:8000/api/users', {
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`http://localhost:8000/api/users/getUser`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
 
-                console.log(response.data); // Debugging: Log the entire response
-
-                const userData = response.data.users; // Adjust based on actual response structure
+                const userData = response.data.user;
                 setUser({
                     id: userData.id,
                     name: userData.name,
                     email: userData.email,
-                    password: '' // Leave password empty for security reasons
+                    password: '' 
                 });
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -41,8 +42,8 @@ const UserDashProfile = () => {
         fetchUserData();
     }, []);
 
-    const handleEditClick = (field) => {
-        setEditableField(field);
+    const handleFieldClick = (field) => {
+        setEditableFields((prev) => ({ ...prev, [field]: true }));
     };
 
     const handleInputChange = (e) => {
@@ -53,83 +54,76 @@ const UserDashProfile = () => {
         }));
     };
 
-    const handleInputBlur = async (field) => {
-        setEditableField(null);
-
+    const handleUpdate = async () => {
         try {
-            const token = localStorage.getItem('token'); // Adjust if using a different token storage
-            await axios.put(`http://localhost:8000/api/users/${user.id}`, {
-                [field]: user[field]
+            const token = localStorage.getItem('token');
+            await axios.put(`http://localhost:8000/api/users`, {
+                name: user.name,
+                email: user.email,
+                password: user.password ? user.password : undefined
             }, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 }
             });
-            setUpdatedField(field); // Indicate success
-            setTimeout(() => setUpdatedField(null), 2000); // Reset after 2 seconds
+            alert('User data updated successfully');
+            setEditableFields({ name: false, email: false, password: false });
         } catch (error) {
             console.error('Error updating user data:', error);
+            alert('An error occurred while updating user data');
         }
     };
+    
 
     return (
-        <div className="body flex column between">
+        <div className="body flex column center">
             <UserNav />
+            <h1>Press on Item to Edit It</h1>
+            <h1>Press on the Button to Save Changes</h1>
             <div className="user-info flex column center">
-                <div className="info-box">
-                    <label htmlFor="name">Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        value={user.name}
-                        disabled={editableField !== 'name'}
-                        onChange={handleInputChange}
-                        onBlur={() => handleInputBlur('name')}
-                        className={updatedField === 'name' ? 'updated' : ''}
-                    />
-                    <img
-                        src="/images/editIcon.png"
-                        alt="Edit"
-                        className="edit-icon"
-                        onClick={() => handleEditClick('name')}
-                    />
+                <div className="info-box" onClick={() => handleFieldClick('name')}>
+                    <label>Name</label>
+                    {editableFields.name ? (
+                        <input
+                            type="text"
+                            id="name"
+                            value={user.name}
+                            onChange={handleInputChange}
+                        />
+                    ) : (
+                        <div className="field-value">{user.name}</div>
+                    )}
                 </div>
-                <div className="info-box">
-                    <label htmlFor="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        value={user.email}
-                        disabled={editableField !== 'email'}
-                        onChange={handleInputChange}
-                        onBlur={() => handleInputBlur('email')}
-                        className={updatedField === 'email' ? 'updated' : ''}
-                    />
-                    <img
-                        src="/images/editIcon.png"
-                        alt="Edit"
-                        className="edit-icon"
-                        onClick={() => handleEditClick('email')}
-                    />
+                <div className="info-box" onClick={() => handleFieldClick('email')}>
+                    <label>Email</label>
+                    {editableFields.email ? (
+                        <input
+                            type="email"
+                            id="email"
+                            value={user.email}
+                            onChange={handleInputChange}
+                        />
+                    ) : (
+                        <div className="field-value">{user.email}</div>
+                    )}
                 </div>
-                <div className="info-box">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={user.password}
-                        disabled={editableField !== 'password'}
-                        onChange={handleInputChange}
-                        onBlur={() => handleInputBlur('password')}
-                        className={updatedField === 'password' ? 'updated' : ''}
-                    />
-                    <img
-                        src="/images/editIcon.png"
-                        alt="Edit"
-                        className="edit-icon"
-                        onClick={() => handleEditClick('password')}
-                    />
+                <div className="info-box" onClick={() => handleFieldClick('password')}>
+                    <label>Password</label>
+                    {editableFields.password ? (
+                        <input
+                            type="password"
+                            id="password"
+                            value={user.password}
+                            onChange={handleInputChange}
+                        />
+                    ) : (
+                        <div className="field-value">********</div>
+                    )}
                 </div>
+                <button className="update-button" onClick={handleUpdate}>
+                    <img src="/images/editIcon.png" alt="Update" className="edit-icon" />
+                </button>
             </div>
         </div>
     );
