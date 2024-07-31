@@ -7,6 +7,7 @@ import CodeEditor from './pages/code-editor/CodeEditor';
 import AdminDashboard from './pages/admin';
 import UserDashMessages from './pages/userDashMessages';
 import UserDashProjects from './pages/userDashProjects';
+import UserDashProfile from './pages/userDashProfile';
 function App() {
   return (
     <BrowserRouter>
@@ -15,7 +16,8 @@ function App() {
         <Route path={routes.login} element={<Login />} />
         <Route path={routes.signup} element={<SignUp/>}/>
         <Route path={routes.codeEditor} element={<CodeEditor/>}/>
-        <Route path="/" element={<UserDashProjects/>}/>
+        <Route path="/" element={<UserDashProfile/>}/>
+        <Route path='/projects' element={<UserDashProjects/>}/>
         </Routes>
     </BrowserRouter>
   );
