@@ -12,7 +12,35 @@ const UserChats = () => {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const location = useLocation();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      verifyUser(token);
+    }
+  }, [navigate]);
 
+  const verifyUser = async (token) => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/verify-token", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.data.status === "success") {
+        const userRole = response.data.user.role;
+        if (userRole !== "user") {
+          navigate("/admin");
+        }
+      } else {
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error("Token verification error:", error);
+      localStorage.removeItem("token");
+      navigate("/login")
+    }
+  };
   useEffect(() => {
     if (token) {
       verifyToken(token);

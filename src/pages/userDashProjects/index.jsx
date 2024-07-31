@@ -10,7 +10,35 @@ const UserDashProjects = () => {
     const [newProjectTitle, setNewProjectTitle] = useState('');
     const newProjectCode ='empty';
     const navigate = useNavigate(); 
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+          verifyToken(token);
+        }
+      }, [navigate]);
     
+      const verifyToken = async (token) => {
+        try {
+          const response = await axios.get("http://localhost:8000/api/verify-token", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (response.data.status === "success") {
+            const userRole = response.data.user.role;
+            if (userRole !== "user") {
+              navigate("/admin");
+            }
+          } else {
+            localStorage.removeItem("token");
+            navigate("/login");
+          }
+        } catch (error) {
+          console.error("Token verification error:", error);
+          localStorage.removeItem("token");
+          navigate("/login")
+        }
+      };
     useEffect(() => {
         fetchProjects();
     }, []);

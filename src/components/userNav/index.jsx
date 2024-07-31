@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import "./style.css";
 import UserPopup from "../popup";  // Import the UserPopup component
+import UserLogout from "../userLogout";
 
 const UserNav = ({
   text,
@@ -107,11 +108,12 @@ const UserNav = ({
         </li>
 
         <li className="nav-item"><Link to="/projects">Projects</Link></li>
-        <li className="nav-item"><Link to="/messages">Messages</Link></li>
+        <li className="nav-item"><Link to="/chats">Messages</Link></li>
         <li className="nav-item">
           <Link to="/profile">Profile</Link>
           {username && <span className="username">{username}</span>} {/* Display username */}
         </li>
+        <UserLogout/>
       </ul>
 
       {selectedUser && <UserPopup user={selectedUser} onClose={handleClosePopup} />}

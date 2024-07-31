@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './style.css';
 
 const LandingPage = () => {
@@ -7,13 +8,15 @@ const LandingPage = () => {
             <nav className="navbar">
                 <img src="http://localhost:3000/images/CodeCoffinLogo.png" alt="CodeCoffin Logo" className="logo" />
                 <div className="auth-buttons">
-                    <button className="sign-up-button">Sign Up</button>
-                    <button className="login-button">Login</button>
+                    <Link to="/signup" className="sign-up-button">Sign Up</Link>
+                    <Link to="/login" className="login-button">Login</Link>
                 </div>
             </nav>
             <header className="hero-section" style={{ backgroundImage: `url(http://localhost:3000/images/HeroImage.png)` }}>
-                <h1 className="hero-title">CodeCoffin</h1>
-                <p className="hero-subtitle">Indent or Die!</p>
+                <div className="hero-content">
+                    <h1 className="hero-title">CodeCoffin</h1>
+                    <p className="hero-subtitle">Indent or Die!</p>
+                </div>
             </header>
             <main className="content">
                 <section className="welcome-section">

@@ -50,7 +50,7 @@ body, html, #root {
   background-color: #6d7763;
 }
 
-.content {
+.content1 {
   flex: 1;
   padding: 20px;
   background-color: #98A68A;
@@ -81,9 +81,12 @@ table th {
   background-color: #f2f2f2;
   text-align: left;
 }
-
+table tr{
+  color: #000;
+}
 table tr:nth-child(even) {
   background-color: #f9f9f9;
+  color: #000;
 }
 
 table tr:hover {

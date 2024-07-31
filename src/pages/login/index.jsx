@@ -24,16 +24,18 @@ const Login = () => {
       if (response.data.status === "success") {
         const userRole = response.data.user.role;
         if (userRole === "user") {
-          navigate("/user");
+          navigate("/profile");
         } else {
           navigate("/admin");
         }
       } else {
         localStorage.removeItem("token");
+        navigate("/login");
       }
     } catch (error) {
       console.error("Token verification error:", error);
       localStorage.removeItem("token");
+      navigate("/login")
     }
   };
   const handleSubmit = async (e) => {
@@ -54,7 +56,7 @@ const Login = () => {
           console.log(response)
           localStorage.setItem("token",response.data.authorisation.token);
           if(response.data.user.role ==="user"){
-            navigate("/user");}
+            navigate("/profile");}
           else{
             navigate("/admin")
           }
