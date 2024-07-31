@@ -21,6 +21,8 @@ const UserDashProfile = () => {
         const fetchUserData = async () => {
             try {
                 const token = localStorage.getItem('token');
+                const userId = localStorage.getItem('use_id');
+
                 const response = await axios.get(`http://localhost:8000/api/users/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
