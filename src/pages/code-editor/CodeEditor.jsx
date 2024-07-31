@@ -80,7 +80,12 @@ const CodeEditor = () => {
         });
         const project = response.data;
         setTitle(project.source_code.title);
-        setValue(project.source_code.code || "");
+        if (project.source_code.code==="empty"){
+          setValue("");
+        }
+        else{
+        setValue(project.source_code.code);
+        }
       } catch (error) {
         console.error('Error fetching project code:', error);
         setValue("");
