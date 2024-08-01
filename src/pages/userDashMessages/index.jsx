@@ -9,38 +9,11 @@ const UserChats = () => {
   const [selectedChat, setSelectedChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [userId, setUserId] = useState(null);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const location = useLocation();
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      verifyUser(token);
-    }
-  }, [navigate]);
 
-  const verifyUser = async (token) => {
-    try {
-      const response = await axios.get("http://localhost:8000/api/verify-token", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.data.status === "success") {
-        const userRole = response.data.user.role;
-        if (userRole !== "user") {
-          navigate("/admin");
-        }
-      } else {
-        localStorage.removeItem("token");
-        navigate("/login");
-      }
-    } catch (error) {
-      console.error("Token verification error:", error);
-      localStorage.removeItem("token");
-      navigate("/login")
-    }
-  };
   useEffect(() => {
     if (token) {
       verifyToken(token);
@@ -59,6 +32,7 @@ const UserChats = () => {
       
       if (response.data.status === "success") {
         const userRole = response.data.user.role;
+        setUserId(response.data.user.id);
         if (userRole !== "user") {
           navigate("/admin");
         }
@@ -85,14 +59,14 @@ const UserChats = () => {
         
         const params = new URLSearchParams(location.search);
         const receiverId = params.get('receiver_id');
-        const receiverName=params.get('receiver_name');
+        const receiverName = params.get('receiver_name');
         if (receiverId) {
           const existingChat = response.data.data.find(chat => chat.chat.participant_id === parseInt(receiverId));
           if (existingChat) {
             setSelectedChat(existingChat);
             setMessages(existingChat.messages);
           } else {
-            handleNewChat(receiverId,receiverName);
+            handleNewChat(receiverId, receiverName);
           }
         }
       } catch (error) {
@@ -103,7 +77,7 @@ const UserChats = () => {
     fetchChats();
   }, [token, location]);
 
-  const handleNewChat = (receiverId,receiverName) => {
+  const handleNewChat = (receiverId, receiverName) => {
     const newChat = {
       chat: {
         id: `temp-${receiverId}`,
@@ -170,7 +144,7 @@ const UserChats = () => {
               {messages.map(message => (
                 <div key={message.id} className="message">
                   <p
-                    className={`messageText ${message.sender_id === 103 ? 'messageSender' : 'messageReceiver'}`}
+                    className={`messageText ${message.sender_id === userId ? 'messageSender' : 'messageReceiver'}`}
                   >
                     {message.message}
                     <span className="timestamp">
