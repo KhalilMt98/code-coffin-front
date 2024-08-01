@@ -14,20 +14,22 @@ const UserPopup = ({ user, onClose }) => {
           throw new Error('No token found');
         }
 
-        const response = await axios.get('http://localhost:8000/api/source-codes/user', {
+        const response = await axios.get(`http://localhost:8000/api/source-codes/getUserProject/${user.id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(response)
-        setProjects(response.data.source_code);
+
+        setProjects(response.data);
       } catch (error) {
-        console.error('Error fetching projects:', error);
+        console.error('Error fetching projects:', error.response.data);
       }
     };
 
-    fetchProjects();
-  }, []);
+    if (user.id) {
+      fetchProjects();
+    }
+  }, [user.id]);
 
   return (
     <div className="popup-overlay" onClick={onClose}>
@@ -45,7 +47,7 @@ const UserPopup = ({ user, onClose }) => {
             <li>No projects available</li>
           )}
         </ul>
-        <Link to={`/chats?receiver_id=${user.id}&receiver_name=${user.name}`} className="message-button">
+        <Link to={`/messages?receiver_id=${user.id}`} className="message-button">
           Message
         </Link>
       </div>
