@@ -5,8 +5,6 @@ import './popup.css';
 
 const UserPopup = ({ user, onClose }) => {
   const [projects, setProjects] = useState([]);
-  const [userId, setUserId] = useState(null);
-
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -21,18 +19,15 @@ const UserPopup = ({ user, onClose }) => {
             Authorization: `Bearer ${token}`,
           },
         });
-
-        const userProjects = response.data.filter((project) => project.user_id === userId);
-        setProjects(userProjects);
+        console.log(response)
+        setProjects(response.data.source_code);
       } catch (error) {
         console.error('Error fetching projects:', error);
       }
     };
 
-    if (userId) {
-      fetchProjects();
-    }
-  }, [userId]);
+    fetchProjects();
+  }, []);
 
   return (
     <div className="popup-overlay" onClick={onClose}>
@@ -51,8 +46,8 @@ const UserPopup = ({ user, onClose }) => {
           )}
         </ul>
         <Link to={`/chats?receiver_id=${user.id}&receiver_name=${user.name}`} className="message-button">
-  Message
-</Link>
+          Message
+        </Link>
       </div>
     </div>
   );
