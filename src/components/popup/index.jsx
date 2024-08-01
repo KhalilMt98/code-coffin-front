@@ -47,7 +47,7 @@ const UserPopup = ({ user, onClose }) => {
             <li>No projects available</li>
           )}
         </ul>
-        <Link to={`/messages?receiver_id=${user.id}`} className="message-button">
+        <Link to={`/chats?receiver_id=${user.id}&receiver_name=${user.name}`} className="message-button">
           Message
         </Link>
       </div>
